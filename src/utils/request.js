@@ -5,10 +5,11 @@ import {
 
 //克隆axios
 let requestQ = axios.create({
-    baseURL: 'http://127.0.0.1/heimamm/public', //!基地址
+    baseURL: process.env.VUE_APP_URL, //!基地址
     // headers: { //请求头
     //     token: getToken()
     // }
+    withCredentials: true //在vue中加这段话解决跨域
 
 });
 
@@ -24,15 +25,15 @@ requestQ.interceptors.request.use(function (config) {
 
 
 //用户登录
-function login_user(url, data) {
+// function login_user(url, data) {
 
-    return requestQ({
-        url,
-        method: 'post',
-        data,
-        withCredentials: true
-    })
-}
+//     return requestQ({
+//         url,
+//         method: 'post',
+//         data,
+
+//     })
+// }
 
 function get(url) {
 
@@ -42,12 +43,12 @@ function get(url) {
     })
 }
 
-function get_Parmas(url, parmas) {
+function get_Params(url, params) {
 
     return requestQ({
         url,
         method: 'get',
-        parmas
+        params
     })
 }
 
@@ -61,8 +62,16 @@ function post_Data(url, data) {
 }
 class CloudApi {
 
-    login = data => login_user('/login', data);
+    //登录
+    login = data => post_Data('/login', data);
+    //获取用户信息
     getUser = () => get('/info');
+    //注册
+    register = data => post_Data('/register', data);
+    //获取注册验证码
+    register_note = data => post_Data('/sendsms', data);
+    //获取学科列表
+    subject_list = params => get_Params('/subject/list', params);
 
 }
 

@@ -152,9 +152,10 @@ export default {
 
               if (res.data.code == 200) {
                 //成功以后把token存起来
-                window.localStorage.setItem("token", res.data.data.token);
+                this.$message.success("登录成功");
+                // window.localStorage.setItem("token", res.data.data.token);
                 setToken(res.data.data.token); //调用存入token方法
-                this.$router.push("/index"); //跳转到首页
+                this.$router.push("/index/subject"); //跳转到首页
               } else {
                 this.$message(res.data.message);
               }
